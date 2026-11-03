@@ -42,6 +42,7 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 	GeneratorPortal gpn;
 	ExcelUtility elib ;
 	String input;
+	String input2;
 	
 	@Test
 	public void TC_001VerifyGeneratorportalloginlink() throws InterruptedException
@@ -141,9 +142,7 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 
 		Thread.sleep(1000);
 
-		String copiedUrl = (String) Toolkit.getDefaultToolkit()
-		        .getSystemClipboard()
-		        .getData(DataFlavor.stringFlavor);
+		String copiedUrl = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 
 		System.out.println("Copied URL: " + copiedUrl);
 		
@@ -185,6 +184,7 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		gpn.getEmailtextfield().sendKeys(Keys.DELETE);
 		String input = elib.getDataFromExcel("GeneratorPortal", 1, 2);
 		gpn.getEmailtextfield().sendKeys(input);
+		
 		gpn.getEmailtextfield().sendKeys("95692689");
 		System.out.println("Email text field accepts numbers");
 	    utilityclassobject.gettest().log(Status.PASS,"Email text field accepts numbers");	
@@ -222,6 +222,14 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		gpn.getEmailtextfield().sendKeys(Keys.CONTROL + "a");
 		gpn.getEmailtextfield().sendKeys(Keys.DELETE);
 		gpn.getLogin().click();
+		
+		  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		  WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Invalid email format')]")));
+
+				// Verify the error message
+				String actualMessage = toast.getText();
+				Assert.assertEquals(actualMessage,"Invalid email format");
+				System.out.println("Error toast verified: " + actualMessage);
 		System.out.println("Displayed invalid email format error message successfully");
 	    utilityclassobject.gettest().log(Status.PASS,"Email text field accepts specialcharacters");	
 	}
@@ -236,6 +244,14 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		String input = elib.getDataFromExcel("GeneratorPortal", 1, 6);
 		gpn.getEmailtextfield().sendKeys(input);
 		gpn.getLogin().click();
+		
+		 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		  WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Invalid email format')]")));
+
+				// Verify the error message
+				String actualMessage = toast.getText();
+				Assert.assertEquals(actualMessage,"Invalid email format");
+				System.out.println("Error toast verified: " + actualMessage);
 	    System.out.println("Displayed invalid email format error message successfully");
 	    utilityclassobject.gettest().log(Status.PASS,"Email text field accepts specialcharacters");	
 	}
@@ -265,6 +281,14 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 	{
 		gpn.getPasswordtextfield().click();
 		gpn.getLogin().click();
+		
+		 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		  WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Password cannot be empty')]")));
+
+				// Verify the error message
+				String actualMessage = toast.getText();
+				Assert.assertEquals(actualMessage,"Password cannot be empty");
+				System.out.println("Error toast verified: " + actualMessage);
 		System.out.println("Displayed erorr message as Password can not be empty");
 	    utilityclassobject.gettest().log(Status.PASS,"Displayed erorr message as Password can not be empty");		
 	}
@@ -404,6 +428,16 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		gpn.getForgotpasswordEmail().sendKeys(Keys.DELETE);
 		String input = elib.getDataFromExcel("GeneratorPortal", 7, 2);
 		gpn.getForgotpasswordEmail().sendKeys(input);
+		gpn.getSubmitButton().click();
+		
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		  WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Invalid email format')]")));
+
+				// Verify the error message
+				String actualMessage = toast.getText();
+				Assert.assertEquals(actualMessage,"Invalid email format");
+				System.out.println("Error toast verified: " + actualMessage);
 		System.out.println("Forgot password email text field will not accept invalid email displayed invalid email format error message");
 		utilityclassobject.gettest().log(Status.PASS,"Forgot password email text field will not accept invalid email displayed invalid email format error message");
 	}
@@ -617,6 +651,10 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		gpn.getFirstname().sendKeys(Keys.CONTROL+"a");
 		gpn.getFirstname().sendKeys(Keys.DELETE);
 		gpn.getRegisternowButton().click();
+		
+		String actualMessage = gpn.getFirstname().getAttribute("validationMessage");
+		System.out.println("Actual validation message: " + actualMessage);
+		Assert.assertEquals(actualMessage,"Please fill out this field.");
 		System.out.println("First name textfield without input Displayed suggestion as please fill out this field");
 		utilityclassobject.gettest().log(Status.PASS,"First name textfield without input Displayed suggestion as please fill out this field");		
 		
@@ -695,6 +733,11 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		gpn.getLastname().sendKeys(Keys.CONTROL+"a");
 		gpn.getLastname().sendKeys(Keys.DELETE);
 		gpn.getRegisternowButton().click();
+		
+		
+		String actualMessage = gpn.getLastname().getAttribute("validationMessage");
+		System.out.println("Actual validation message: " + actualMessage);
+		Assert.assertEquals(actualMessage,"Please fill out this field.");
 		System.out.println("Displayed suggestion as please fill out this field");
 		utilityclassobject.gettest().log(Status.PASS,"Displayed suggestion as please fill out this field");
 	}
@@ -747,8 +790,13 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		gpn.getLastname().sendKeys(input);	
 		gpn.getRegEmail().click();
 		gpn.getRegEmail().sendKeys(Keys.CONTROL+"a");
+		
 		gpn.getRegEmail().sendKeys(Keys.DELETE);
 		gpn.getRegisternowButton().click();
+		
+		String actualMessage = gpn.getRegEmail().getAttribute("validationMessage");
+		System.out.println("Actual validation message: " + actualMessage);
+		Assert.assertEquals(actualMessage,"Please fill out this field.");
 		System.out.println("Displayed suggestion as please fill out this field");
 		utilityclassobject.gettest().log(Status.PASS,"Displayed suggestion as please fill out this field");
 		
@@ -762,6 +810,9 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		gpn.getRegEmail().sendKeys(Keys.DELETE);
 		String input = elib.getDataFromExcel("GeneratorPortal", 1, 4);
 		gpn.getRegEmail().sendKeys(input);
+		
+		String actualMessage = gpn.getRegEmail().getAttribute("validationMessage");
+		System.out.println("Actual validation message: " + actualMessage);
 		System.out.println("A part of following '@' should not contain the symbol '@', ',','#'' etc suggestion is displayed");
 		utilityclassobject.gettest().log(Status.PASS,"A part of following '@' should not contain the symbol '@', ',','#'' etc suggestion is displayed");
 	}
@@ -791,6 +842,8 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		  
 		  if(actualValue.matches(".*[a-zA-Z].*")) 
 		  {
+			  
+			  
 		  System.out.println("Phone number text field accepted alphabets. :PASS");
 		  utilityclassobject.gettest().log(Status.FAIL,"Phone number text field accepted alphabets."); 
 		  } 
@@ -838,7 +891,7 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 	@Test(dependsOnMethods = "TC_070VerifyGeneratorPortal_Phonenumberwithspecialcharacters")
 	public void TC_071VerifyGeneratorPortal_PhonenumberwithMorethan10digits() throws EncryptedDocumentException, IOException
 	{
-		 gpn.getPhoneNumber().click();
+		  gpn.getPhoneNumber().click();
 		  gpn.getPhoneNumber().sendKeys(Keys.CONTROL + "a");
 		  gpn.getPhoneNumber().sendKeys(Keys.DELETE); 
 		  String input = elib.getDataFromExcel("GeneratorPortal", 19, 4);
@@ -853,6 +906,9 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		  else { System.out.println("Phone number text field does not accept more than 10 digits: PASS");
 		  utilityclassobject.gettest().log(Status.PASS,"Phone number text field does not accept more than 10 digits"); 
 		  }
+		  
+		  
+		  
 		  System.out.println("Phone number text field does not accept more than 10 digits");
 		  utilityclassobject.gettest().log(Status.PASS,"Phone number text field does not accept more than 10 digits"); 
 	}
@@ -867,6 +923,8 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 			  String input = elib.getDataFromExcel("GeneratorPortal", 19, 5);
 			  gpn.getPhoneNumber().sendKeys(input); 
 			  gpn.getRegisternowButton().click();
+			  
+			  
 			  System.out.println("Phone number text field does not accept less than 10 digits and Enter valid phone number is required messge is displayed");
 			  utilityclassobject.gettest().log(Status.PASS,"Phone number text field does not accept less than 10 digits and Enter valid phone number is required messge is displayeds"); 
 		}
@@ -879,6 +937,13 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 			  gpn.getPhoneNumber().sendKeys(Keys.DELETE); 
 			  gpn.getRegisternowButton().click();
 			  
+			  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			  WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Valid phone number is required')]")));
+
+					// Verify the error message
+					String actualMessage = toast.getText();
+					Assert.assertEquals(actualMessage,"Valid phone number is required");
+					System.out.println("Error toast verified: " + actualMessage);
 			  gpn.getPhoneNumber().click();
 			  String input = elib.getDataFromExcel("GeneratorPortal", 19, 2);
 			  gpn.getPhoneNumber().sendKeys(input); 
@@ -933,9 +998,19 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 			  gpn.getCompanyname().sendKeys(Keys.DELETE); 
 			  gpn.getRegisternowButton().click();
 			  
+			  
+			  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			  WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Company name is required')]")));
+
+					// Verify the error message
+					String actualMessage = toast.getText();
+					Assert.assertEquals(actualMessage,"Company name is required");
+					System.out.println("Error toast verified: " + actualMessage);
+			  
 			  gpn.getCompanyname().click();
 			  String input = elib.getDataFromExcel("GeneratorPortal", 22, 1);
-			  gpn.getCompanyname().sendKeys(input); 
+			  gpn.getCompanyname().sendKeys(input);
+			  
 			  System.out.println("Company name text field wihtout input company name is required error message is displayed");
 			  utilityclassobject.gettest().log(Status.PASS,"Company name text field wihtout input company name is required error message is displayed"); 
 		}
@@ -977,13 +1052,22 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 		}
 		
 		@Test(dependsOnMethods = "TC_080VerifyGeneratorPortal_ServicelocationwithSpecialcharacters")
-		public void TC_081VerifyGeneratorPortal_SerivcelocationwihtoutInput() throws EncryptedDocumentException, IOException
+		public void TC_081VerifyGeneratorPortal_SerivcelocationwihtoutInput() throws EncryptedDocumentException, IOException, InterruptedException
 		{
 			  gpn.getSerivcelocationAddress().click();
 			  gpn.getSerivcelocationAddress().sendKeys(Keys.CONTROL + "a");
 			  gpn.getSerivcelocationAddress().sendKeys(Keys.DELETE); 
 			  gpn.getRegisternowButton().click();
 			  
+			  
+			  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+			  WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Service location address is required')]")));
+
+					// Verify the error message
+					String actualMessage = toast.getText();
+					Assert.assertEquals(actualMessage,"Service location address is required");
+					System.out.println("Error toast verified: " + actualMessage); 
+					Thread.sleep(2000);
 			  gpn.getSerivcelocationAddress().click();
 			  String input = elib.getDataFromExcel("GeneratorPortal", 25, 2);
 			  gpn.getSerivcelocationAddress().sendKeys(input); 
@@ -1054,7 +1138,6 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 			  gpn.getAccountNumber().click();
 			  gpn.getAccountNumber().sendKeys(Keys.CONTROL + "a");
 			  gpn.getAccountNumber().sendKeys(Keys.DELETE); 
-			  gpn.getRegisternowButton().click();
 			  System.out.println("Not displayed any error message it is not mandatory field");
 			  utilityclassobject.gettest().log(Status.PASS,"Not displayed any error message it is not mandatory field"); 
 		}
@@ -1065,37 +1148,226 @@ public class GeneratorPortal_login extends BaseClassForGEneratorContacts{
 			gpn.getAlreadyhaveanaccount().click();
 			gpn.getWelcomepage().isDisplayed();
 			System.out.println("Not displayed any error message it is not mandatory field");
-			utilityclassobject.gettest().log(Status.PASS,"Not displayed any error message it is not mandatory field"); 
+			utilityclassobject.gettest().log(Status.PASS,"Not displayed any error message it is not mandatory field");
+			
 			
 		}
 		
-		@Test
-		public void TC_002()
+		@Test(dependsOnMethods = "TC_086VerifyGeneatorPortal_Alreadyhaveanaccount")
+		public void TC_087VerifyGeneratorPortal_NewuserwithexistingEmail() throws EncryptedDocumentException, IOException, InterruptedException
 		{
-			System.out.println("Hifwnfki");
+			gpn.getNewuserRegistrationButton().click();
+			gpn.getFirstname().click();
+			gpn.getFirstname().sendKeys(Keys.CONTROL+"a");
+			gpn.getFirstname().sendKeys(Keys.DELETE);
+			String input = elib.getDataFromExcel("GeneratorPortal", 10, 5);
+			gpn.getFirstname().sendKeys(input);
+			
+			gpn.getLastname().click();
+			gpn.getLastname().sendKeys(Keys.CONTROL+"a");
+			gpn.getLastname().sendKeys(Keys.DELETE);
+			String input1 = elib.getDataFromExcel("GeneratorPortal", 13, 5);
+			gpn.getLastname().sendKeys(input1);	
+			
+			gpn.getRegEmail().click();
+			gpn.getRegEmail().sendKeys(Keys.CONTROL+"a");
+			gpn.getRegEmail().sendKeys(Keys.DELETE);
+			String input2 = elib.getDataFromExcel("GeneratorPortal", 16, 4);
+			gpn.getRegEmail().sendKeys(input2);
+			
+			gpn.getPhoneNumber().click();
+			gpn.getPhoneNumber().sendKeys(Keys.CONTROL + "a");
+			gpn.getPhoneNumber().sendKeys(Keys.DELETE); 
+			String input3 = elib.getDataFromExcel("GeneratorPortal", 19, 2);
+			gpn.getPhoneNumber().sendKeys(input3); 
+				
+			gpn.getCompanyname().click();
+			gpn.getCompanyname().sendKeys(Keys.CONTROL + "a");
+			gpn.getCompanyname().sendKeys(Keys.DELETE); 
+			String input4 = elib.getDataFromExcel("GeneratorPortal", 22, 1);
+			gpn.getCompanyname().sendKeys(input4);
+			
+			gpn.getSerivcelocationAddress().click();
+			gpn.getSerivcelocationAddress().sendKeys(Keys.CONTROL + "a");
+			gpn.getSerivcelocationAddress().sendKeys(Keys.DELETE); 
+			String input5 = elib.getDataFromExcel("GeneratorPortal", 25, 1);
+			gpn.getSerivcelocationAddress().sendKeys(input5); 
+			
+			gpn.getRegisternowButton().click();
+			WebElement page = driver.findElement(By.xpath("(//h3[contains(text(),'Forgot Password')]/ancestor::div)[6]"));
+			page.isDisplayed();
+			String text = gpn.getForgotpasswordEmail().getText();
+			System.out.println(text);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+			WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'An account with this email already exists. Please use Forgot Password to recover access.')]")));
+			String actualMessage = toast.getText();
+			Assert.assertEquals(actualMessage,"An account with this email already exists. Please use Forgot Password to recover access.");
+			System.out.println("Error toast verified: " + actualMessage);
+			Thread.sleep(20000);
+			System.out.println("It got redirected to the forgot password page and An account with this email already exists. Please use Forgot password to recover access message is displayed");
+			utilityclassobject.gettest().log(Status.PASS,"It got redirected to the forgot password page and An account with this email already exists. Please use Forgot password to recover access message is displayed"); 
 		}
 		
 		
-		@Test
-		public void TC_8789()
+		@Test(dependsOnMethods = "TC_087VerifyGeneratorPortal_NewuserwithexistingEmail")
+		public void TC_088VerifyGeneratorPortal_withNewuserRegistration() throws EncryptedDocumentException, IOException, InterruptedException, AWTException
 		{
-			System.out.println("fhwbfhwbkj");
+			gpn.getBacktoLogin().click();
+			gpn.getNewuserRegistrationButton().click();
+			gpn.getFirstname().click();
+			gpn.getFirstname().sendKeys(Keys.CONTROL+"a");
+			gpn.getFirstname().sendKeys(Keys.DELETE);
+			String input = elib.getDataFromExcel("GeneratorPortal", 10, 5);
+			gpn.getFirstname().sendKeys(input);
+			
+			gpn.getLastname().click();
+			gpn.getLastname().sendKeys(Keys.CONTROL+"a");
+			gpn.getLastname().sendKeys(Keys.DELETE);
+			String input1 = elib.getDataFromExcel("GeneratorPortal", 13, 5);
+			gpn.getLastname().sendKeys(input1);	
+			
+			gpn.getRegEmail().click();
+			gpn.getRegEmail().sendKeys(Keys.CONTROL+"a");
+			gpn.getRegEmail().sendKeys(Keys.DELETE);
+			Random random = new Random();
+			
+			int fourdigit = 1000+random.nextInt(9000);
+			input2 = elib.getDataFromExcel("GeneratorPortal", 13, 5)+fourdigit+"@gmail.com";
+			gpn.getRegEmail().sendKeys(input2);	
+			
+			gpn.getPhoneNumber().click();
+			gpn.getPhoneNumber().sendKeys(Keys.CONTROL + "a");
+			gpn.getPhoneNumber().sendKeys(Keys.DELETE); 
+			String input3 = elib.getDataFromExcel("GeneratorPortal", 19, 2);
+			gpn.getPhoneNumber().sendKeys(input3); 
+				
+			gpn.getCompanyname().click();
+			gpn.getCompanyname().sendKeys(Keys.CONTROL + "a");
+			gpn.getCompanyname().sendKeys(Keys.DELETE); 
+			String input4 = elib.getDataFromExcel("GeneratorPortal", 22, 1);
+			gpn.getCompanyname().sendKeys(input4);
+			
+			gpn.getSerivcelocationAddress().click();
+			gpn.getSerivcelocationAddress().sendKeys(Keys.CONTROL + "a");
+			gpn.getSerivcelocationAddress().sendKeys(Keys.DELETE); 
+			String input5 = elib.getDataFromExcel("GeneratorPortal", 25, 1);
+			gpn.getSerivcelocationAddress().sendKeys(input5); 
+			
+			gpn.getRegisternowButton().click();
+			WebElement text = driver.findElement(By.xpath("//h3[contains (text(),'Verify Your Email')]"));
+			text.isDisplayed();	
+			System.out.println("It displayed verification code has been sent to your email and also it redirect to verify your email page");
+			utilityclassobject.gettest().log(Status.PASS,"It displayed verification code has been sent to your email and also it redirect to verify your email page"); 
+			
+			
 		}
 		
-		@Test
-		public void TC_879()
+		@Test(dependsOnMethods = "TC_088VerifyGeneratorPortal_withNewuserRegistration")
+		public void TC_089VerifyGeneratorPortal_RegistrationPage() throws InterruptedException
 		{
-			System.out.println("fhwbfhwbkj");
+			String parentWindow = null;
+
+			Set<String> allWindows = driver.getWindowHandles();
+
+			System.out.println("Window Count: " + allWindows.size());
+
+			// Find the parent window using its URL
+			for (String window : allWindows) {
+			    driver.switchTo().window(window);
+
+			    String currentUrl = driver.getCurrentUrl();
+
+			    System.out.println("Handle: " + window);
+			    System.out.println("URL: " + currentUrl);
+
+			    if (currentUrl.contains("/admin/profile")) {
+			        parentWindow = window;
+			        break;
+			    }
+			}
+
+			// Switch back to the parent window
+			if (parentWindow != null) {
+			    driver.switchTo().window(parentWindow);
+
+			    System.out.println("---- Switched to Parent Window ----");
+			    System.out.println("Current Handle: " + driver.getWindowHandle());
+			    System.out.println("Current URL: " + driver.getCurrentUrl());
+			    System.out.println("Current Title: " + driver.getTitle());
+			} else {
+			    System.out.println("Parent window not found!");
+			}
+			 
+			
+			WebElement management = driver.findElement(By.xpath("//h6[contains (text(),'Generator Management')]"));
+			management.click();
+			WebElement contacts = driver.findElement(By.xpath("//h6[contains (text(),'Generator Contacts')]"));
+			contacts.click();
+			WebElement placefolder = driver.findElement(By.xpath("//input[@placeholder='Search by name, email or phone...']"));
+			placefolder.click();
+			placefolder.sendKeys(input2);
+			Thread.sleep(200);
+			String authcode = driver.findElement(By.xpath("(//span[@class='text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full'])[2]")).getText();		
+			System.out.println(authcode);
+			
+			Thread.sleep(2000);			
+			String parentWindow1 = null;
+
+			Set<String> allWindows1 = driver.getWindowHandles();
+
+			System.out.println("Window Count: " + allWindows1.size());
+
+			// Find the parent window using its URL
+			for (String window : allWindows1) {
+			    driver.switchTo().window(window);
+
+			    String currentUrl = driver.getCurrentUrl();
+
+			    System.out.println("Handle: " + window);
+			    System.out.println("URL: " + currentUrl);
+
+			    if (currentUrl.contains("generator-portal-auth?transporterId=vuLql6DPJAheAtEE1nlrLnzk1L22")) {
+			        parentWindow1 = window;
+			        break;
+			    }
+			}
+
+			// Switch back to the parent window
+			if (parentWindow1 != null) {
+			    driver.switchTo().window(parentWindow1);
+
+			    System.out.println("---- Switched to child Window ----");
+			    System.out.println("Current Handle: " + driver.getWindowHandle());
+			    System.out.println("Current URL: " + driver.getCurrentUrl());
+			    System.out.println("Current Title: " + driver.getTitle());
+			} else {
+			    System.out.println("child window not found!");
+			}
+			
+			WebElement textfield = driver.findElement(By.xpath("//input[@placeholder='Enter 6-digit code']"));
+			textfield.click();
+			textfield.sendKeys(authcode);
+			WebElement button = driver.findElement(By.xpath("//button[contains (text(),'Verify & Submit')]"));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+			wait.until(ExpectedConditions.elementToBeClickable(button)).click();
+			Thread.sleep(2000);
+			WebElement page = driver.findElement(By.xpath("//div[@class='bg-green-50 border border-green-200 rounded-lg p-6 mb-4']"));
+			page.isDisplayed();
+			System.out.println("Thank you for registering page is dispayed");
+			utilityclassobject.gettest().log(Status.PASS,"Thank you for registering page is dispayed"); 
+
+			
 		}
 		
-		
-		@Test
-		public void TC_8799()
+		@Test(dependsOnMethods = "TC_089VerifyGeneratorPortal_RegistrationPage")
+		public void TC_090VerifyGeneratorPortal_Welcomepagewithnewuaser()
 		{
-			System.out.println("fhwbfhwbkj");
+			gpn.getBacktoLogin().click();
+			gpn.getWelcomepage().isDisplayed();		
+			System.out.println("Welcome page is displayed");
+			utilityclassobject.gettest().log(Status.PASS,"Welcome page is displayed");
 		}
-		
-		
 		
 		
 		

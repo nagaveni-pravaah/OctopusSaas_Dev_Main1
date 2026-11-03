@@ -62,8 +62,20 @@ public class GeneratorPortal {
 	private WebElement accountNumber;
 	@FindBy (xpath = "//div[contains (text(),'Already have an account? Login')]")
 	private WebElement alreadyhaveanaccount;
+	@FindBy (xpath = "https://dev.octopussaas.com/admin/generator-contacts")
+	private WebElement generatorContacts;
+	@FindBy (xpath = "//div[contains (text(),'Back to Login')]")
+	private WebElement backtoLogin;
 	
 	
+	public WebElement getBacktoLogin() {
+		return backtoLogin;
+	}
+
+	public WebElement getGeneratorContacts() {
+		return generatorContacts;
+	}
+
 	public WebElement getAlreadyhaveanaccount() {
 		return alreadyhaveanaccount;
 	}
